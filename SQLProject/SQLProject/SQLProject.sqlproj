@@ -63,6 +63,7 @@
     <Build Include="Employees.sql" />
     <Build Include="Companies.sql" />
     <Build Include="EmployeeInfo.sql" />
+    <Build Include="AddEmployeeInfo.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SQLProject.refactorlog" />
@@ -72,5 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SQLProject.publish.xml" />
+    <None Include="TODO.txt" />
   </ItemGroup>
 </Project>

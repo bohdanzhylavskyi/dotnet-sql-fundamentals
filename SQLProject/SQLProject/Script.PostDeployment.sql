@@ -32,20 +32,20 @@ WHERE NOT EXISTS (
 );
 
 INSERT INTO Employees (AddressId, PersonId, CompanyName, Position, EmployeeName)
-SELECT (SELECT Id FROM Addresses WHERE ZipCode = '62704'),
-(SELECT Id FROM Persons WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi'),
+SELECT (SELECT TOP 1 Id FROM Addresses WHERE ZipCode = '62704'),
+(SELECT TOP 1 Id FROM Persons WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi'),
 'EPAM',
 'Software Engineer',
 'Bohdan Zhylavskyi'
 WHERE NOT EXISTS (
     SELECT 1
     FROM Employees
-    WHERE PersonId = (SELECT Id FROM Persons WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi')
+    WHERE PersonId = (SELECT TOP 1 Id FROM Persons WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi')
 )
 
 INSERT INTO Companies (Name, AddressId)
 SELECT 'EPAM',
-(SELECT Id FROM Addresses WHERE ZipCode = '53703')
+(SELECT TOP 1 Id FROM Addresses WHERE ZipCode = '53703')
 WHERE NOT EXISTS (
     SELECT 1
     FROM Companies
