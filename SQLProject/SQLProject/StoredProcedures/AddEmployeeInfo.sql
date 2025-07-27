@@ -33,11 +33,14 @@ BEGIN
 			VALUES (ISNULL(@FirstName, @EmployeeName), ISNULL(@LastName, @EmployeeName))
 
 		INSERT INTO Employees (AddressId, PersonId, CompanyName, Position, EmployeeName)
-			SELECT (SELECT TOP 1 * FROM @CreatedAddressIds),
-			(SELECT TOP 1 * FROM @CreatedPersonIds),
+		SELECT
+			a.Id,
+			p.Id,
 			@CompanyName,
 			@Position,
-			@EmployeeName;
+			@EmployeeName
+		FROM @CreatedAddressIds a
+        CROSS JOIN @CreatedPersonIds p;
 
 		COMMIT TRANSACTION;
 	END TRY
