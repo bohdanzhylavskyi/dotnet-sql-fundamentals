@@ -60,6 +60,7 @@
     <Folder Include="Views" />
     <Folder Include="StoredProcedures" />
     <Folder Include="PublishProfiles" />
+    <Folder Include="Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Addresses.sql" />
@@ -68,9 +69,12 @@
     <Build Include="Tables\Persons.sql" />
     <Build Include="Views\EmployeeInfo.sql" />
     <Build Include="StoredProcedures\AddEmployeeInfo.sql" />
+    <None Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+	<None Include="Scripts\Script.PostDeployment.Seed.sql" />
+    <None Include="Scripts\Script.PostDeployment.InsertEmployeeTrigger.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TODO.txt" />
