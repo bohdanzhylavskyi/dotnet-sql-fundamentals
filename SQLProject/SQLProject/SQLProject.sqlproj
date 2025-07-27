@@ -56,23 +56,24 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="Tables" />
+    <Folder Include="Views" />
+    <Folder Include="StoredProcedures" />
+    <Folder Include="PublishProfiles" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Persons.sql" />
-    <Build Include="Addresses.sql" />
-    <Build Include="Employees.sql" />
-    <Build Include="Companies.sql" />
-    <Build Include="EmployeeInfo.sql" />
-    <Build Include="AddEmployeeInfo.sql" />
+    <Build Include="Tables\Addresses.sql" />
+    <Build Include="Tables\Companies.sql" />
+    <Build Include="Tables\Employees.sql" />
+    <Build Include="Tables\Persons.sql" />
+    <Build Include="Views\EmployeeInfo.sql" />
+    <Build Include="StoredProcedures\AddEmployeeInfo.sql" />
   </ItemGroup>
   <ItemGroup>
-    <RefactorLog Include="SQLProject.refactorlog" />
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Script.PostDeployment.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SQLProject.publish.xml" />
     <None Include="TODO.txt" />
+    <None Include="PublishProfiles\SQLProject.publish.xml" />
   </ItemGroup>
 </Project>
