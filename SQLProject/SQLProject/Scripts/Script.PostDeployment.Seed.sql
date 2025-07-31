@@ -12,42 +12,53 @@ Post-Deployment Script Template
 
 PRINT 'Starting post-deployment script...'
 
-INSERT INTO Persons (FirstName, LastName)
-SELECT 'Bohdan', 'Zhylavskyi'
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Persons
-    WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi'
-);
-
-INSERT INTO Addresses (Street, City, State, ZipCode)
-SELECT v.Street, v.City, v.State, v.ZipCode
-FROM (VALUES
-    ('123 Maple St', 'Springfield', 'IL', '62704'),
-    ('456 Oak Ave', 'Madison',     'WI', '53703'),
-    ('789 Pine Rd', 'Boulder',     'CO', '80301')
-) AS v (Street, City, State, ZipCode)
-WHERE NOT EXISTS (
-    SELECT 1 FROM Addresses a WHERE a.ZipCode = v.ZipCode
-);
-
-INSERT INTO Employees (AddressId, PersonId, CompanyName, Position, EmployeeName)
-SELECT (SELECT TOP 1 Id FROM Addresses WHERE ZipCode = '62704'),
-(SELECT TOP 1 Id FROM Persons WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi'),
-'EPAM',
-'Software Engineer',
-'Bohdan Zhylavskyi'
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Employees
-    WHERE PersonId = (SELECT TOP 1 Id FROM Persons WHERE FirstName = 'Bohdan' AND LastName = 'Zhylavskyi')
+IF NOT EXISTS (
+    SELECT 1 FROM Employees
+    WHERE EmployeeName = 'Bohdan Zhylavskyi'
 )
+BEGIN
+    EXEC AddEmployeeInfo
+		@EmployeeName = 'Bohdan Zhylavskyi',
+		@FirstName = 'Bohdan',
+		@LastName = 'Zhylavskyi',
+		@CompanyName = 'EPAM',
+		@Position = 'Software Engineer',
+		@Street = '123 Maple St',
+		@City = 'Springfield',
+		@State = 'IL',
+		@ZipCode = '62704'
+END
 
-INSERT INTO Companies (Name, AddressId)
-SELECT 'EPAM',
-(SELECT TOP 1 Id FROM Addresses WHERE ZipCode = '53703')
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM Companies
-    WHERE Name = 'EPAM'
-);
+IF NOT EXISTS (
+    SELECT 1 FROM Employees
+    WHERE EmployeeName = 'Dan Smith'
+)
+BEGIN
+    EXEC AddEmployeeInfo
+		@EmployeeName = 'Dan Smith',
+		@FirstName = 'Dan',
+		@LastName = 'Smith',
+		@CompanyName = 'Google',
+		@Position = 'QA Engineer',
+		@Street = '123456 Oak Ave',
+		@City = 'Madison',
+		@State = 'WI',
+		@ZipCode = '53703'
+END
+
+IF NOT EXISTS (
+    SELECT 1 FROM Employees
+    WHERE EmployeeName = 'Alan Jackson'
+)
+BEGIN
+    EXEC AddEmployeeInfo
+		@EmployeeName = 'Alan Jackson',
+		@FirstName = 'Alan',
+		@LastName = 'Jackson',
+		@CompanyName = 'Amazon',
+		@Position = 'Project Manager',
+		@Street = '789 Pine Rd',
+		@City = 'Boulder',
+		@State = 'CO',
+		@ZipCode = '80301'
+END
